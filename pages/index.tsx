@@ -1,67 +1,50 @@
 // pages/index.tsx
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
-import TimelinePath from '../components/TimelinePath';
-import HeroSection from '../components/HeroSection';
-import MilestoneCard from '../components/MilestoneCard';
-import CountersFinale from '../components/CountersFinale'; // Import CountersFinale
-
-// PlaceholderComponent can now be fully removed if it's not used elsewhere.
-// For this example, assuming it's fully replaced.
+import CountersFinale from '../components/CountersFinale';
 
 export default function Home() {
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const totalScrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const currentScroll = window.scrollY;
-      const progress = totalScrollableHeight > 0 ? currentScroll / totalScrollableHeight : 0;
-      setScrollProgress(Math.min(progress, 1));
-    };
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+  // Dados de relacionamento
   const wifeName = "Amada";
   const yourName = "Seu Nome";
   const datingStartDate = "2021-01-15T20:30:00";
   const weddingStartDate = "2023-10-24T17:00:00";
-  const heroPhotoUrl = "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?auto=format&fit=crop&w=1974";
-  const datingPhotoUrl = "https://images.unsplash.com/photo-1518977956812-177a90c7a3c2?auto=format&fit=crop&w=800";
-  const weddingPhotoUrl = "https://images.unsplash.com/photo-1520854221256-154540828145?auto=format&fit=crop&w=800";
 
   return (
     <>
       <Head>
-        <title>Nossa Jornada no Tempo</title>
-        <meta name="description" content={`Nossa Jornada no Tempo - Para ${wifeName}`} />
+        <title>Nossa História de Amor | {wifeName} & {yourName}</title>
+        <meta name="description" content={`Contador de tempo do nosso relacionamento - ${wifeName} & ${yourName}`} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="relative overflow-hidden">
-        <TimelinePath scrollProgress={scrollProgress} />
+      <main>
+        {/* Hero Section */}
+        <section className="py-20 md:py-28 text-center">
+          <div className="container mx-auto px-4">
+            <h1 className="title-large mb-6 animate-fade">
+              {wifeName} & {yourName}
+            </h1>
+            <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto animate-fade delay-1">
+              Cada segundo ao seu lado é um presente. 
+              Veja quanto tempo nossa história de amor já dura.
+            </p>
+            
+            <div className="flex justify-center">
+              <a href="#contadores" className="inline-block bg-blue-600 text-white py-3 px-6 rounded-full font-medium hover:bg-blue-700 transition duration-300 animate-fade delay-2">
+                Ver nosso tempo juntos
+              </a>
+            </div>
+          </div>
+        </section>
 
-        <div className="relative z-10 container mx-auto px-4">
-          <HeroSection
-            mainPhotoUrl={heroPhotoUrl}
-            wifeName={wifeName}
-          />
-          <MilestoneCard
-            title="O Início de Tudo"
-            date={datingStartDate}
-            iconType="hearts"
-            photoUrl={datingPhotoUrl}
-            align="left"
-          />
-          <MilestoneCard
-            title="O Dia do 'Sim'"
-            date={weddingStartDate}
-            iconType="ring"
-            photoUrl={weddingPhotoUrl}
-            align="right"
-          />
+        {/* Decorative hearts */}
+        <div className="fixed top-20 left-20 heart-decoration animate-pulse text-blue-300">♥</div>
+        <div className="fixed bottom-20 right-20 heart-decoration animate-pulse text-blue-300">♥</div>
+        
+        {/* Counters Section */}
+        <div id="contadores">
           <CountersFinale
             datingStartDate={datingStartDate}
             weddingStartDate={weddingStartDate}

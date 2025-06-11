@@ -61,7 +61,6 @@ const AnimatedTimeCounter: React.FC<AnimatedTimeCounterProps> = ({ startDateTime
         years--;
       }
 
-      // Ensure no negative values if startDateTime is in the future (though not expected for this app)
       setDuration({
         years: Math.max(0, years),
         months: Math.max(0, months),
@@ -79,16 +78,11 @@ const AnimatedTimeCounter: React.FC<AnimatedTimeCounterProps> = ({ startDateTime
   }, [startDateTime]);
 
   return (
-    <div className="flex flex-wrap items-start justify-center text-center">
+    <div className="flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-8">
       {duration.years > 0 && <TimeDisplayUnit value={duration.years} label={duration.years === 1 ? "Ano" : "Anos"} />}
       {duration.months > 0 && <TimeDisplayUnit value={duration.months} label={duration.months === 1 ? "Mês" : "Meses"} />}
-      {/* Always show days, hours, minutes, seconds even if zero, unless years/months are present and day is also zero */}
-      { (duration.years > 0 || duration.months > 0 || duration.days > 0) &&
-        <TimeDisplayUnit value={duration.days} label={duration.days === 1 ? "Dia" : "Dias"} />
-      }
-      { (duration.years === 0 && duration.months === 0 && duration.days === 0 && duration.hours === 0) ? null : /* Only hide if all larger units and hours are zero */
-         <TimeDisplayUnit value={duration.hours} label={duration.hours === 1 ? "Hora" : "Horas"} />
-      }
+      <TimeDisplayUnit value={duration.days} label={duration.days === 1 ? "Dia" : "Dias"} />
+      <TimeDisplayUnit value={duration.hours} label={duration.hours === 1 ? "Hora" : "Horas"} />
       <TimeDisplayUnit value={duration.minutes} label={duration.minutes === 1 ? "Minuto" : "Minutos"} />
       <TimeDisplayUnit value={duration.seconds} label={duration.seconds === 1 ? "Segundo" : "Segundos"} />
     </div>

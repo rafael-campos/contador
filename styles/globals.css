@@ -1,147 +1,213 @@
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script&family=Cormorant+Garamond&family=Lora&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap');
 
 /* Tailwind base, components, and utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Global Styles */
-@layer base {
-  body {
-    @apply bg-[#4C1A2B] text-[#F5F5DC]; /* Deep Burgundy background, Creamy Off-White text */
-    /* Applying a subtle gradient as a fallback for particle animation */
-    background-image: linear-gradient(to bottom, #3D2C42, #4C1A2B); /* Dark Plum to Deep Burgundy */
-    font-family: 'Lora', serif; /* Default body font */
-    min-height: 100vh;
-    overflow-x: hidden; /* Prevent horizontal scroll */
-  }
-
-  h1, h2, h3, .font-script { /* .font-script can be used for specific script text */
-    font-family: 'Dancing Script', cursive; /* Or 'Great Vibes' if preferred for main titles */
-  }
-
-  .font-great-vibes {
-    font-family: 'Great Vibes', cursive;
-  }
-
-  .font-lora {
-    font-family: 'Lora', serif;
-  }
-
-  .font-cormorant {
-    font-family: 'Cormorant Garamond', serif;
-  }
-
-  /* Basic responsive setup for typography if needed */
-  /* Example:
-  h1 {
-    @apply text-4xl md:text-5xl;
-  }
-  */
+:root {
+  --primary: #92A8D1; /* Azul Serenity */
+  --primary-dark: #7B93BC; /* Azul Serenity mais escuro */
+  --secondary: #EFF4FB; /* Azul bem claro */
+  --text-dark: #2D3748;
+  --text-light: #F5F9FF;
+  --accent: #B3C5E5; /* Azul Serenity mais claro */
+  --background: #F5F9FF;
+  --gold: #D4AF37;
 }
 
-/* Specific color classes from the plan */
-.bg-deep-burgundy { background-color: #4C1A2B; }
-.bg-dark-plum { background-color: #3D2C42; }
-.bg-midnight-blue { background-color: #191970; } /* Alternative background */
+/* Global Styles */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--background);
+  color: var(--text-dark);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
 
-.text-rose-gold { color: #B76E79; }
-.border-rose-gold { border-color: #B76E79; }
-.fill-rose-gold { fill: #B76E79; } /* For SVGs */
+/* Romantic background pattern */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20C20 20 25.9 7.1 35.4 15.4C41.6 21.2 38 34.2 30.7 27.3C28.9 25.6 29.3 20.6 20 20zM20 20C20 20 14.1 32.9 4.6 24.6C-1.6 18.8 2 5.8 9.3 12.7C11.1 14.4 10.7 19.4 20 20z' fill='%2392A8D1' fill-opacity='0.07'/%3E%3C/svg%3E");
+  z-index: -1;
+  pointer-events: none;
+}
 
-.text-champagne-gold { color: #F7E7CE; }
-.border-champagne-gold { border-color: #F7E7CE; }
-.fill-champagne-gold { fill: #F7E7CE; } /* For SVGs */
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
+  color: var(--primary-dark);
+  margin: 0;
+}
 
-.text-creamy-off-white { color: #F5F5DC; }
+.script-font {
+  font-family: 'Great Vibes', cursive;
+}
 
-/* More specific styles for the timeline path or other elements can be added here or in component-specific CSS modules */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
 
-@layer utilities {
-  .animation-delay-500 {
-    animation-delay: 0.5s;
+/* Contador */
+.counter-section {
+  background: linear-gradient(135deg, #E4EBFA 0%, #EFF4FB 100%);
+  padding: 4rem 0;
+  border-radius: 1rem;
+  margin: 2rem 0;
+  box-shadow: 0 10px 30px rgba(146, 168, 209, 0.1);
+}
+
+.counter-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(146, 168, 209, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(146, 168, 209, 0.1);
+}
+
+.counter-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(146, 168, 209, 0.25);
+}
+
+/* Números do contador */
+.counter-number {
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+  margin: 0.5rem 0;
+  display: block;
+  text-align: center;
+}
+
+.counter-label {
+  font-size: 1.2rem;
+  color: var(--primary-dark);
+  font-weight: 500;
+  text-align: center;
+  display: block;
+}
+
+/* Títulos */
+.title-large {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.5rem;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title-medium {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: var(--primary-dark);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Datas */
+.date-display {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  display: inline-block;
+  margin: 0.5rem 0;
+  box-shadow: 0 4px 8px rgba(146, 168, 209, 0.25);
+  text-align: center;
+}
+
+/* Seta de rolagem */
+.scroll-arrow {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(146, 168, 209, 0.3);
+  z-index: 100;
+  animation: bounce 2s infinite;
+  cursor: pointer;
+}
+
+.scroll-arrow svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--primary);
+}
+
+/* Animações */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
   }
-  .animation-delay-1000 {
-    animation-delay: 1s;
+  40% {
+    transform: translateX(-50%) translateY(-10px);
   }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
   }
+}
 
-  .animate-fadeInUp {
-    animation: fadeInUp 1s ease-out forwards;
-    opacity: 0; /* Start hidden, animation will make it visible */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-
-  /* Tailwind's animate-bounce is already quite good for the scroll icon */
-
-  @keyframes slideInLeft {
-    from {
-      opacity: 0;
-      transform: translateX(-50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
 
-  .animate-slideInLeft {
-    animation: slideInLeft 0.8s ease-out forwards;
-    opacity: 0; /* Start hidden */
+.animate-fade {
+  animation: fadeIn 1s ease forwards;
+}
+
+.delay-1 {
+  animation-delay: 0.2s;
+}
+
+.delay-2 {
+  animation-delay: 0.4s;
+}
+
+.delay-3 {
+  animation-delay: 0.6s;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .counter-number {
+    font-size: 3rem;
   }
-
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
+  
+  .title-large {
+    font-size: 2.5rem;
   }
-
-  .animate-slideInRight {
-    animation: slideInRight 0.8s ease-out forwards;
-    opacity: 0; /* Start hidden */
-  }
-
-  /* Icon pulsing animation */
-  @keyframes pulseGlow {
-    0%, 100% {
-      filter: drop-shadow(0 0 3px #B76E79); /* Rose Gold glow */
-      transform: scale(1);
-    }
-    50% {
-      filter: drop-shadow(0 0 10px #B76E79);
-      transform: scale(1.1);
-    }
-  }
-
-  .animate-pulseGlow { /* Apply this class to the SVG icons if desired */
-    animation: pulseGlow 2.5s infinite ease-in-out;
-  }
-
-  @keyframes shimmer {
-    0%, 100% {
-      filter: drop-shadow(0 0 2px #F7E7CE); /* Champagne Gold subtle glow */
-    }
-    50% {
-      filter: drop-shadow(0 0 8px #F7E7CE) brightness(1.5);
-    }
-  }
-
-  .animate-shimmer {
-    animation: shimmer 3s infinite ease-in-out;
+  
+  .title-medium {
+    font-size: 2rem;
   }
 }
