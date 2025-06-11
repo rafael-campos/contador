@@ -16,7 +16,12 @@ interface Duration {
 }
 
 // Componente TimeDisplayUnit interno
-const TimeDisplayUnit: React.FC<{ value: number; label: string; isSeconds?: boolean; key?: any }> = ({ value, label, isSeconds = false }) => {
+const TimeDisplayUnit: React.FC<{ 
+  value: number; 
+  label: string; 
+  isSeconds?: boolean; 
+  key?: React.Key;
+}> = ({ value, label, isSeconds = false }) => {
   return (
     <div className="flex flex-col items-center p-3 mx-4 md:mx-6 lg:mx-8 animate-fade delay-1">
       <div className="relative mb-3">
