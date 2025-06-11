@@ -1,63 +1,49 @@
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script&family=Cormorant+Garamond&family=Lora&display=swap');
+/* Remove previous @import url for Google Fonts if they will be handled by next/font in layout.tsx */
+/* @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script&family=Cormorant+Garamond&family=Lora&display=swap'); */
 
-/* Tailwind base, components, and utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Global Styles */
+:root {
+  --background-dark: #0d1b2a; /* Deep, dark navy blue */
+  --background-light: #1b263b; /* Slightly lighter navy */
+  --primary-accent: #95B9C7;   /* Serenity Blue */
+  --text-primary: #F0F8FF;      /* Alice Blue / Creamy off-white */
+  --text-secondary: #A9B4C2;    /* Lighter, softer gray-blue */
+
+  /* Define font variables here if not solely relying on next/font's CSS variables */
+  /* These will be overridden by next/font if set up correctly in layout.tsx */
+  --font-dancing-script: 'Dancing Script', cursive;
+  --font-cormorant-garamond: 'Cormorant Garamond', serif;
+}
+
 @layer base {
   body {
-    @apply bg-[#4C1A2B] text-[#F5F5DC]; /* Deep Burgundy background, Creamy Off-White text */
-    /* Applying a subtle gradient as a fallback for particle animation */
-    background-image: linear-gradient(to bottom, #3D2C42, #4C1A2B); /* Dark Plum to Deep Burgundy */
-    font-family: 'Lora', serif; /* Default body font */
+    background-color: var(--background-dark); /* Fallback if fixed background in layout isn't covering */
+    color: var(--text-primary);
+    font-family: var(--font-cormorant-garamond); /* Default body font */
     min-height: 100vh;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-x: hidden;
   }
 
   h1, h2, h3, .font-script { /* .font-script can be used for specific script text */
-    font-family: 'Dancing Script', cursive; /* Or 'Great Vibes' if preferred for main titles */
+    font-family: var(--font-dancing-script);
   }
 
-  .font-great-vibes {
-    font-family: 'Great Vibes', cursive;
-  }
+  /* Remove previous theme-specific utility classes if they are no longer needed */
+  /* e.g., .bg-deep-burgundy, .text-rose-gold etc. */
 
-  .font-lora {
-    font-family: 'Lora', serif;
-  }
-
-  .font-cormorant {
-    font-family: 'Cormorant Garamond', serif;
-  }
-
-  /* Basic responsive setup for typography if needed */
-  /* Example:
-  h1 {
-    @apply text-4xl md:text-5xl;
-  }
+  /* Any existing keyframes like fadeInUp, slideInLeft, etc. can be kept if they are generic enough,
+     or removed if new animation approaches (e.g. framer-motion) will replace them.
+     For now, keep existing @keyframes unless they conflict.
   */
 }
 
-/* Specific color classes from the plan */
-.bg-deep-burgundy { background-color: #4C1A2B; }
-.bg-dark-plum { background-color: #3D2C42; }
-.bg-midnight-blue { background-color: #191970; } /* Alternative background */
-
-.text-rose-gold { color: #B76E79; }
-.border-rose-gold { border-color: #B76E79; }
-.fill-rose-gold { fill: #B76E79; } /* For SVGs */
-
-.text-champagne-gold { color: #F7E7CE; }
-.border-champagne-gold { border-color: #F7E7CE; }
-.fill-champagne-gold { fill: #F7E7CE; } /* For SVGs */
-
-.text-creamy-off-white { color: #F5F5DC; }
-
-/* More specific styles for the timeline path or other elements can be added here or in component-specific CSS modules */
-
+/* Keep existing generic animations if they might still be useful,
+   otherwise, they can be cleaned up later or as framer-motion is implemented.
+   For example, fadeInUp, slideInLeft, slideInRight, pulseGlow, shimmer.
+*/
 @layer utilities {
   .animation-delay-500 {
     animation-delay: 0.5s;
@@ -79,10 +65,8 @@
 
   .animate-fadeInUp {
     animation: fadeInUp 1s ease-out forwards;
-    opacity: 0; /* Start hidden, animation will make it visible */
+    opacity: 0;
   }
-
-  /* Tailwind's animate-bounce is already quite good for the scroll icon */
 
   @keyframes slideInLeft {
     from {
@@ -97,7 +81,7 @@
 
   .animate-slideInLeft {
     animation: slideInLeft 0.8s ease-out forwards;
-    opacity: 0; /* Start hidden */
+    opacity: 0;
   }
 
   @keyframes slideInRight {
@@ -113,35 +97,56 @@
 
   .animate-slideInRight {
     animation: slideInRight 0.8s ease-out forwards;
-    opacity: 0; /* Start hidden */
+    opacity: 0;
   }
 
-  /* Icon pulsing animation */
-  @keyframes pulseGlow {
+  @keyframes pulseGlow { /* This might be themed later if needed */
     0%, 100% {
-      filter: drop-shadow(0 0 3px #B76E79); /* Rose Gold glow */
+      filter: drop-shadow(0 0 3px var(--primary-accent));
       transform: scale(1);
     }
     50% {
-      filter: drop-shadow(0 0 10px #B76E79);
+      filter: drop-shadow(0 0 10px var(--primary-accent));
       transform: scale(1.1);
     }
   }
 
-  .animate-pulseGlow { /* Apply this class to the SVG icons if desired */
+  .animate-pulseGlow {
     animation: pulseGlow 2.5s infinite ease-in-out;
   }
 
-  @keyframes shimmer {
+  @keyframes shimmer { /* This might be themed later if needed */
     0%, 100% {
-      filter: drop-shadow(0 0 2px #F7E7CE); /* Champagne Gold subtle glow */
+      filter: drop-shadow(0 0 2px var(--primary-accent));
     }
     50% {
-      filter: drop-shadow(0 0 8px #F7E7CE) brightness(1.5);
+      filter: drop-shadow(0 0 8px var(--primary-accent)) brightness(1.5);
     }
   }
 
   .animate-shimmer {
     animation: shimmer 3s infinite ease-in-out;
+  }
+
+  @keyframes tick {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+      color: var(--primary-accent); /* Highlight color */
+    }
+    50% {
+      transform: scale(1.15);
+      opacity: 1;
+      color: var(--text-primary);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+      color: var(--text-primary);
+    }
+  }
+
+  .animate-tick {
+    animation: tick 0.4s ease-out; /* Short animation */
   }
 }
