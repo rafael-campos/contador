@@ -1,6 +1,5 @@
 // pages/index.tsx
 import Head from 'next/head';
-import { useState, useEffect } from 'react';
 import CountersFinale from '../components/CountersFinale';
 
 export default function Home() {
