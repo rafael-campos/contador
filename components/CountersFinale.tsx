@@ -50,13 +50,17 @@ const CountersFinale: React.FC<CountersFinaleProps> = ({
         {/* Contadores */}
         <div className="flex flex-col md:flex-row justify-center gap-8 mb-20">
           <div className="counter-card w-full md:w-5/12 animate-fade delay-1">
-            <h3 className="title-medium mb-6">Tempo de Namoro</h3>
-            <AnimatedTimeCounter startDateTime={datingStartDate} />
+            <AnimatedTimeCounter 
+              startDateTime={datingStartDate} 
+              title="Tempo de Namoro"
+            />
           </div>
           
           <div className="counter-card w-full md:w-5/12 animate-fade delay-2">
-            <h3 className="title-medium mb-6">Tempo de Casamento</h3>
-            <AnimatedTimeCounter startDateTime={weddingStartDate} />
+            <AnimatedTimeCounter 
+              startDateTime={weddingStartDate} 
+              title="Tempo de Casamento"
+            />
           </div>
         </div>
         
