@@ -1,31 +1,74 @@
-import TimeCounter from '../components/TimeCounter';
+// pages/index.tsx
+import Head from 'next/head';
+import { useState, useEffect } from 'react';
+import TimelinePath from '../components/TimelinePath';
+import HeroSection from '../components/HeroSection';
+import MilestoneCard from '../components/MilestoneCard';
+import CountersFinale from '../components/CountersFinale'; // Import CountersFinale
+
+// PlaceholderComponent can now be fully removed if it's not used elsewhere.
+// For this example, assuming it's fully replaced.
 
 export default function Home() {
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const currentScroll = window.scrollY;
+      const progress = totalScrollableHeight > 0 ? currentScroll / totalScrollableHeight : 0;
+      setScrollProgress(Math.min(progress, 1));
+    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const wifeName = "Amada";
+  const yourName = "Seu Nome";
+  const datingStartDate = "2021-01-15T20:30:00";
+  const weddingStartDate = "2023-10-24T17:00:00";
+  const heroPhotoUrl = "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?auto=format&fit=crop&w=1974";
+  const datingPhotoUrl = "https://images.unsplash.com/photo-1518977956812-177a90c7a3c2?auto=format&fit=crop&w=800";
+  const weddingPhotoUrl = "https://images.unsplash.com/photo-1520854221256-154540828145?auto=format&fit=crop&w=800";
+
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
-      <div className="bg-white shadow-xl rounded-lg p-6 md:p-10 w-full max-w-2xl">
-        <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-8">
-          Nossos Contadores de Tempo Especial
-        </h1>
+    <>
+      <Head>
+        <title>Nossa Jornada no Tempo</title>
+        <meta name="description" content={`Nossa Jornada no Tempo - Para ${wifeName}`} />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-        <div className="mb-8 p-6 border border-pink-300 rounded-lg bg-pink-50">
-          <h2 className="text-2xl font-semibold text-pink-700 mb-3">
-            Tempo de Casamento <span role="img" aria-label="Wedding Rings">💍</span>
-          </h2>
-          <div className="text-lg text-pink-600">
-            <TimeCounter startDateTime="2023-10-24T17:00:00" />
-          </div>
-        </div>
+      <main className="relative overflow-hidden">
+        <TimelinePath scrollProgress={scrollProgress} />
 
-        <div className="p-6 border border-blue-300 rounded-lg bg-blue-50">
-          <h2 className="text-2xl font-semibold text-blue-700 mb-3">
-            Tempo de Namoro <span role="img" aria-label="Couple with Heart">💑</span>
-          </h2>
-          <div className="text-lg text-blue-600">
-            <TimeCounter startDateTime="2021-01-15T20:30:00" />
-          </div>
+        <div className="relative z-10 container mx-auto px-4">
+          <HeroSection
+            mainPhotoUrl={heroPhotoUrl}
+            wifeName={wifeName}
+          />
+          <MilestoneCard
+            title="O Início de Tudo"
+            date={datingStartDate}
+            iconType="hearts"
+            photoUrl={datingPhotoUrl}
+            align="left"
+          />
+          <MilestoneCard
+            title="O Dia do 'Sim'"
+            date={weddingStartDate}
+            iconType="ring"
+            photoUrl={weddingPhotoUrl}
+            align="right"
+          />
+          <CountersFinale
+            datingStartDate={datingStartDate}
+            weddingStartDate={weddingStartDate}
+            yourName={yourName}
+          />
         </div>
-      </div>
-    </div>
+      </main>
+    </>
   );
 }

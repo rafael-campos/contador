@@ -1,3 +1,147 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script&family=Cormorant+Garamond&family=Lora&display=swap');
+
+/* Tailwind base, components, and utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Global Styles */
+@layer base {
+  body {
+    @apply bg-[#4C1A2B] text-[#F5F5DC]; /* Deep Burgundy background, Creamy Off-White text */
+    /* Applying a subtle gradient as a fallback for particle animation */
+    background-image: linear-gradient(to bottom, #3D2C42, #4C1A2B); /* Dark Plum to Deep Burgundy */
+    font-family: 'Lora', serif; /* Default body font */
+    min-height: 100vh;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+  }
+
+  h1, h2, h3, .font-script { /* .font-script can be used for specific script text */
+    font-family: 'Dancing Script', cursive; /* Or 'Great Vibes' if preferred for main titles */
+  }
+
+  .font-great-vibes {
+    font-family: 'Great Vibes', cursive;
+  }
+
+  .font-lora {
+    font-family: 'Lora', serif;
+  }
+
+  .font-cormorant {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* Basic responsive setup for typography if needed */
+  /* Example:
+  h1 {
+    @apply text-4xl md:text-5xl;
+  }
+  */
+}
+
+/* Specific color classes from the plan */
+.bg-deep-burgundy { background-color: #4C1A2B; }
+.bg-dark-plum { background-color: #3D2C42; }
+.bg-midnight-blue { background-color: #191970; } /* Alternative background */
+
+.text-rose-gold { color: #B76E79; }
+.border-rose-gold { border-color: #B76E79; }
+.fill-rose-gold { fill: #B76E79; } /* For SVGs */
+
+.text-champagne-gold { color: #F7E7CE; }
+.border-champagne-gold { border-color: #F7E7CE; }
+.fill-champagne-gold { fill: #F7E7CE; } /* For SVGs */
+
+.text-creamy-off-white { color: #F5F5DC; }
+
+/* More specific styles for the timeline path or other elements can be added here or in component-specific CSS modules */
+
+@layer utilities {
+  .animation-delay-500 {
+    animation-delay: 0.5s;
+  }
+  .animation-delay-1000 {
+    animation-delay: 1s;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeInUp {
+    animation: fadeInUp 1s ease-out forwards;
+    opacity: 0; /* Start hidden, animation will make it visible */
+  }
+
+  /* Tailwind's animate-bounce is already quite good for the scroll icon */
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slideInLeft {
+    animation: slideInLeft 0.8s ease-out forwards;
+    opacity: 0; /* Start hidden */
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slideInRight {
+    animation: slideInRight 0.8s ease-out forwards;
+    opacity: 0; /* Start hidden */
+  }
+
+  /* Icon pulsing animation */
+  @keyframes pulseGlow {
+    0%, 100% {
+      filter: drop-shadow(0 0 3px #B76E79); /* Rose Gold glow */
+      transform: scale(1);
+    }
+    50% {
+      filter: drop-shadow(0 0 10px #B76E79);
+      transform: scale(1.1);
+    }
+  }
+
+  .animate-pulseGlow { /* Apply this class to the SVG icons if desired */
+    animation: pulseGlow 2.5s infinite ease-in-out;
+  }
+
+  @keyframes shimmer {
+    0%, 100% {
+      filter: drop-shadow(0 0 2px #F7E7CE); /* Champagne Gold subtle glow */
+    }
+    50% {
+      filter: drop-shadow(0 0 8px #F7E7CE) brightness(1.5);
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 3s infinite ease-in-out;
+  }
+}
