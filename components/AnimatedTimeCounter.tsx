@@ -1,9 +1,9 @@
-// components/AnimatedTimeCounter.tsx
+// components/AnimatedTimeCounter.tsx (Reshaping this to be the new TimeCounter)
 import React, { useState, useEffect } from 'react';
-import TimeDisplayUnit from './TimeDisplayUnit';
 
-interface AnimatedTimeCounterProps {
+interface TimeCounterProps { // Renaming props interface for clarity
   startDateTime: string;
+  title: string; // New prop for the title like "Tempo de Namoro"
 }
 
 interface Duration {
@@ -15,7 +15,23 @@ interface Duration {
   seconds: number;
 }
 
-const AnimatedTimeCounter: React.FC<AnimatedTimeCounterProps> = ({ startDateTime }) => {
+// Reusable TimeDisplayUnit, now internal or could be separate if preferred
+const TimeDisplayUnit: React.FC<{ value: number; label: string; isSeconds?: boolean; key?: any }> = ({ value, label, isSeconds = false }) => {
+  // The 'key' prop for seconds is for a potential CSS animation reset, not Framer's AnimatePresence
+  return (
+    <div className="flex flex-col items-center p-2">
+      <span
+        key={isSeconds ? value : undefined} // Add key only for seconds to potentially re-trigger CSS animation
+        className={`font-cormorant text-5xl md:text-6xl font-bold text-[var(--text-primary)] ${isSeconds ? 'animate-tick' : ''}`}
+      >
+        {value}
+      </span>
+      <span className="font-cormorant text-xs sm:text-sm md:text-base text-[var(--text-secondary)] mt-1">{label}</span>
+    </div>
+  );
+};
+
+const AnimatedTimeCounter: React.FC<TimeCounterProps> = ({ startDateTime, title }) => {
   const [duration, setDuration] = useState<Duration>({
     years: 0,
     months: 0,
@@ -24,6 +40,9 @@ const AnimatedTimeCounter: React.FC<AnimatedTimeCounterProps> = ({ startDateTime
     minutes: 0,
     seconds: 0,
   });
+
+  // State to help trigger second animation
+  const [secondTick, setSecondTick] = useState(0);
 
   useEffect(() => {
     const calculateDuration = () => {
@@ -37,31 +56,16 @@ const AnimatedTimeCounter: React.FC<AnimatedTimeCounterProps> = ({ startDateTime
       let minutes = currentTime.getMinutes() - startTime.getMinutes();
       let seconds = currentTime.getSeconds() - startTime.getSeconds();
 
-      // Adjust for negative values by borrowing from higher units
-      if (seconds < 0) {
-        seconds += 60;
-        minutes--;
-      }
-      if (minutes < 0) {
-        minutes += 60;
-        hours--;
-      }
-      if (hours < 0) {
-        hours += 24;
-        days--;
-      }
+      if (seconds < 0) { seconds += 60; minutes--; }
+      if (minutes < 0) { minutes += 60; hours--; }
+      if (hours < 0) { hours += 24; days--; }
       if (days < 0) {
-        // Borrow days from previous month
         const prevMonth = new Date(currentTime.getFullYear(), currentTime.getMonth(), 0);
         days += prevMonth.getDate();
         months--;
       }
-      if (months < 0) {
-        months += 12;
-        years--;
-      }
+      if (months < 0) { months += 12; years--; }
 
-      // Ensure no negative values if startDateTime is in the future (though not expected for this app)
       setDuration({
         years: Math.max(0, years),
         months: Math.max(0, months),
@@ -70,29 +74,42 @@ const AnimatedTimeCounter: React.FC<AnimatedTimeCounterProps> = ({ startDateTime
         minutes: Math.max(0, minutes),
         seconds: Math.max(0, seconds),
       });
+      setSecondTick(s => s + 1); // Trigger re-render for seconds animation key change
     };
 
-    calculateDuration(); // Calculate once immediately
-    const intervalId = setInterval(calculateDuration, 1000); // Then update every second
-
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    calculateDuration();
+    const intervalId = setInterval(calculateDuration, 1000);
+    return () => clearInterval(intervalId);
   }, [startDateTime]);
 
+  // const timeUnits = [
+  //   { value: duration.years, label: duration.years === 1 ? "Ano" : "Anos", show: duration.years > 0 },
+  //   { value: duration.months, label: duration.months === 1 ? "Mês" : "Meses", show: duration.months > 0 },
+  //   { value: duration.days, label: duration.days === 1 ? "Dia" : "Dias", show: true }, // Always show days
+  //   { value: duration.hours, label: duration.hours === 1 ? "Hora" : "Horas", show: true }, // Always show hours
+  //   { value: duration.minutes, label: duration.minutes === 1 ? "Minuto" : "Minutos", show: true }, // Always show minutes
+  //   { value: duration.seconds, label: duration.seconds === 1 ? "Segundo" : "Segundos", show: true, isSeconds: true }, // Always show seconds
+  // ];
+
+  // const visibleUnits = timeUnits.filter(unit => unit.show);
+  // If only showing days and above, and all are zero, then it looks weird.
+  // Let's ensure we always show at least D,H,M,S if Y/M are zero.
+  // The user plan shows Y,M,D,H,M,S. We should try to show all if possible, or hide leading zeros.
+  // The user example shows all 6 units. So we will show all.
+
   return (
-    <div className="flex flex-wrap items-start justify-center text-center">
-      {duration.years > 0 && <TimeDisplayUnit value={duration.years} label={duration.years === 1 ? "Ano" : "Anos"} />}
-      {duration.months > 0 && <TimeDisplayUnit value={duration.months} label={duration.months === 1 ? "Mês" : "Meses"} />}
-      {/* Always show days, hours, minutes, seconds even if zero, unless years/months are present and day is also zero */}
-      { (duration.years > 0 || duration.months > 0 || duration.days > 0) &&
+    <div className="text-center text-[var(--text-primary)] w-full">
+      <h2 className="font-dancing-script text-3xl md:text-4xl mb-6 text-[var(--primary-accent)]">{title}</h2>
+      <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2 md:gap-4">
+        <TimeDisplayUnit value={duration.years} label={duration.years === 1 ? "Ano" : "Anos"} />
+        <TimeDisplayUnit value={duration.months} label={duration.months === 1 ? "Mês" : "Meses"} />
         <TimeDisplayUnit value={duration.days} label={duration.days === 1 ? "Dia" : "Dias"} />
-      }
-      { (duration.years === 0 && duration.months === 0 && duration.days === 0 && duration.hours === 0) ? null : /* Only hide if all larger units and hours are zero */
-         <TimeDisplayUnit value={duration.hours} label={duration.hours === 1 ? "Hora" : "Horas"} />
-      }
-      <TimeDisplayUnit value={duration.minutes} label={duration.minutes === 1 ? "Minuto" : "Minutos"} />
-      <TimeDisplayUnit value={duration.seconds} label={duration.seconds === 1 ? "Segundo" : "Segundos"} />
+        <TimeDisplayUnit value={duration.hours} label={duration.hours === 1 ? "Hora" : "Horas"} />
+        <TimeDisplayUnit value={duration.minutes} label={duration.minutes === 1 ? "Minuto" : "Minutos"} />
+        <TimeDisplayUnit value={duration.seconds} label={duration.seconds === 1 ? "Segundo" : "Segundos"} isSeconds={true} key={secondTick} />
+      </div>
     </div>
   );
 };
 
-export default AnimatedTimeCounter;
+export default AnimatedTimeCounter; // Keep name or rename file/component to TimeCounter

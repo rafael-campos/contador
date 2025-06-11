@@ -1,74 +1,110 @@
 // pages/index.tsx
 import Head from 'next/head';
-import { useState, useEffect } from 'react';
-import TimelinePath from '../components/TimelinePath';
-import HeroSection from '../components/HeroSection';
-import MilestoneCard from '../components/MilestoneCard';
-import CountersFinale from '../components/CountersFinale'; // Import CountersFinale
+import { useEffect, useRef } from 'react';
+import AnimatedTimeCounter from '../components/AnimatedTimeCounter';
+import ScrollProgressTimeline from '../components/ScrollProgressTimeline'; // Import the new component
 
-// PlaceholderComponent can now be fully removed if it's not used elsewhere.
-// For this example, assuming it's fully replaced.
+const ScrollDownArrow = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={2}
+    stroke="currentColor"
+    className="w-10 h-10 text-[var(--primary-accent)]"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0L4.5 13.5M12 21V3" />
+  </svg>
+);
 
 export default function Home() {
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const wifeName = "Mirelle"; // Atualizado
+  const datingStartDate = "2021-12-15T20:00:00"; // Atualizado
+  const weddingStartDate = "2024-10-24T17:00:00"; // Atualizado
+
+  // Refs for sections
+  const introRef = useRef<HTMLDivElement>(null);
+  const countersRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const totalScrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const currentScroll = window.scrollY;
-      const progress = totalScrollableHeight > 0 ? currentScroll / totalScrollableHeight : 0;
-      setScrollProgress(Math.min(progress, 1));
+    // Intersection Observer for Counters section fade-in
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.2,
     };
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
-  const wifeName = "Amada";
-  const yourName = "Seu Nome";
-  const datingStartDate = "2021-01-15T20:30:00";
-  const weddingStartDate = "2023-10-24T17:00:00";
-  const heroPhotoUrl = "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?auto=format&fit=crop&w=1974";
-  const datingPhotoUrl = "https://images.unsplash.com/photo-1518977956812-177a90c7a3c2?auto=format&fit=crop&w=800";
-  const weddingPhotoUrl = "https://images.unsplash.com/photo-1520854221256-154540828145?auto=format&fit=crop&w=800";
+    const countersObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('opacity-0');
+          entry.target.classList.add('opacity-100');
+        } else {
+          entry.target.classList.remove('opacity-100');
+          entry.target.classList.add('opacity-0');
+        }
+      });
+    }, observerOptions);
+
+    const currentCountersRef = countersRef.current; // Capture current value for cleanup
+
+    if (currentCountersRef) {
+      countersObserver.observe(currentCountersRef);
+    }
+
+    return () => {
+      if (currentCountersRef) {
+        countersObserver.unobserve(currentCountersRef);
+      }
+    };
+  }, []);
 
   return (
     <>
       <Head>
-        <title>Nossa Jornada no Tempo</title>
-        <meta name="description" content={`Nossa Jornada no Tempo - Para ${wifeName}`} />
-        <link rel="icon" href="/favicon.ico" />
+        <title>Nossa Jornada no Tempo - Para {wifeName}</title>
+        <meta name="description" content={`Uma dedicatória especial para ${wifeName}`} />
       </Head>
 
-      <main className="relative overflow-hidden">
-        <TimelinePath scrollProgress={scrollProgress} />
+      {/* ScrollProgressTimeline is placed here, its fixed positioning will handle layout */}
+      <ScrollProgressTimeline />
 
-        <div className="relative z-10 container mx-auto px-4">
-          <HeroSection
-            mainPhotoUrl={heroPhotoUrl}
-            wifeName={wifeName}
-          />
-          <MilestoneCard
-            title="O Início de Tudo"
-            date={datingStartDate}
-            iconType="hearts"
-            photoUrl={datingPhotoUrl}
-            align="left"
-          />
-          <MilestoneCard
-            title="O Dia do 'Sim'"
-            date={weddingStartDate}
-            iconType="ring"
-            photoUrl={weddingPhotoUrl}
-            align="right"
-          />
-          <CountersFinale
-            datingStartDate={datingStartDate}
-            weddingStartDate={weddingStartDate}
-            yourName={yourName}
-          />
-        </div>
-      </main>
+      <div> {/* Main content container */}
+        {/* Intro Section */}
+        <section
+          ref={introRef}
+          className="h-screen flex flex-col items-center justify-center text-center p-4 relative transition-opacity duration-1000 ease-in-out"
+        >
+          <div className="mb-16">
+            <h1 className="font-dancing-script text-5xl md:text-7xl text-[var(--text-primary)] mb-6">
+              Para a minha amada {wifeName}
+            </h1>
+            <p className="font-cormorant text-xl md:text-2xl text-[var(--text-secondary)]">
+              Nossa jornada começou aqui...
+            </p>
+          </div>
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+            <ScrollDownArrow />
+          </div>
+        </section>
+
+        {/* Counters Section */}
+        <section
+          ref={countersRef}
+          className="h-screen flex flex-col justify-center items-center gap-10 md:gap-16 p-4 opacity-0 transition-opacity duration-1000 ease-in-out"
+        >
+          <div className="flex flex-col md:flex-row justify-center items-stretch md:items-start gap-10 md:gap-16 w-full max-w-5xl">
+            <AnimatedTimeCounter
+              title="Tempo de Namoro"
+              startDateTime={datingStartDate}
+            />
+            <AnimatedTimeCounter
+              title="Tempo de Casamento"
+              startDateTime={weddingStartDate}
+            />
+          </div>
+        </section>
+      </div>
     </>
   );
 }
