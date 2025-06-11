@@ -85,7 +85,7 @@ h1, h2, h3, h4 {
 
 /* Números do contador */
 .counter-number {
-  font-size: 4rem;
+  font-size: 2.25rem; /* 36px */
   font-weight: 700;
   color: var(--primary);
   line-height: 1;
@@ -95,7 +95,7 @@ h1, h2, h3, h4 {
 }
 
 .counter-label {
-  font-size: 1.2rem;
+  font-size: 0.875rem; /* 14px */
   color: var(--primary-dark);
   font-weight: 500;
   text-align: center;
@@ -222,7 +222,11 @@ h1, h2, h3, h4 {
 /* Responsividade */
 @media (max-width: 768px) {
   .counter-number {
-    font-size: 3rem;
+    font-size: 2rem; /* 32px */
+  }
+  
+  .counter-label {
+    font-size: 0.8rem;
   }
   
   .title-large {

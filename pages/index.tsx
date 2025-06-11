@@ -4,10 +4,10 @@ import CountersFinale from '../components/CountersFinale';
 
 export default function Home() {
   // Dados de relacionamento
-  const wifeName = "Amada";
-  const yourName = "Seu Nome";
+  const wifeName = "Mirelle";
+  const yourName = "Rafael";
   const datingStartDate = "2021-01-15T20:30:00";
-  const weddingStartDate = "2023-10-24T17:00:00";
+  const weddingStartDate = "2024-04-24T17:00:00";
 
   return (
     <>
@@ -29,12 +29,6 @@ export default function Home() {
               Cada segundo ao seu lado é um presente. 
               Veja quanto tempo nossa história de amor já dura.
             </p>
-            
-            <div className="flex justify-center">
-              <a href="#contadores" className="inline-block bg-blue-600 text-white py-3 px-6 rounded-full font-medium hover:bg-blue-700 transition duration-300 animate-fade delay-2">
-                Ver nosso tempo juntos
-              </a>
-            </div>
           </div>
         </section>
 

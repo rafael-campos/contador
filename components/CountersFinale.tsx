@@ -1,6 +1,11 @@
 // components/CountersFinale.tsx
 import React from 'react';
-import AnimatedTimeCounter from './AnimatedTimeCounter';
+import dynamic from 'next/dynamic';
+
+const AnimatedTimeCounter = dynamic(() => import('./AnimatedTimeCounter'), {
+  ssr: false,
+  loading: () => <div className="h-24" /> // Placeholder para evitar que o layout pule
+});
 
 interface CountersFinaleProps {
   datingStartDate: string;
@@ -36,11 +41,9 @@ const CountersFinale: React.FC<CountersFinaleProps> = ({
             <h3 className="title-medium mb-2">Início do Namoro</h3>
             <span className="date-display">{formatDate(datingStartDate)}</span>
           </div>
-          
           <div className="hidden md:block">
             <span className="text-5xl text-blue-500">♥</span>
           </div>
-          
           <div className="animate-fade delay-2">
             <h3 className="title-medium mb-2">Início do Casamento</h3>
             <span className="date-display">{formatDate(weddingStartDate)}</span>
@@ -55,7 +58,6 @@ const CountersFinale: React.FC<CountersFinaleProps> = ({
               title="Tempo de Namoro"
             />
           </div>
-          
           <div className="counter-card w-full md:w-5/12 animate-fade delay-2">
             <AnimatedTimeCounter 
               startDateTime={weddingStartDate} 
