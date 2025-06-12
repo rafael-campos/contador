@@ -1,10 +1,16 @@
 // pages/index.tsx
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 
 const Counters = dynamic(() => import('../components/Counters'), {
   ssr: false,
   // Optional: Add a loading component
+});
+
+const StarryBackground = dynamic(() => import('../components/StarryBackground'), {
+  ssr: false,
+  loading: () => null,
 });
 
 export default function Home() {
@@ -22,23 +28,26 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2392A8D1'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>" />
       </Head>
+      
+      {/* Animated Starry Background */}
+      <Suspense fallback={null}>
+        <StarryBackground />
+      </Suspense>
 
-      <main className="flex-grow mt-20">
+      <main className="flex-grow pt-10 mt-10">
         {/* Hero Section */}
-        <section className="py-16 md:py-24 text-center">
+        <section className="py-20 md:py-28 text-center mt-8">
             <div className="container mx-auto px-4">
-                <h1 className="font-script text-6xl md:text-8xl text-blue-500 mb-4">
+                <h1 className="font-script text-6xl md:text-8xl text-blue-500 mb-6">
                   {wifeName} & {yourName}
                 </h1>
-                <p className="text-lg md:text-xl text-blue-300 opacity-80 max-w-2xl mx-auto">
+                <p className="text-lg md:text-xl text-blue-300 opacity-80 max-w-2xl mx-auto mt-4">
                   Cada segundo ao seu lado é um presente. Veja quanto tempo nossa história de amor já dura.
                 </p>
             </div>
         </section>
 
-        {/* Decorative hearts */}
-        <div className="fixed top-20 left-20 heart-decoration animate-pulse text-blue-300">♥</div>
-        <div className="fixed bottom-20 right-20 heart-decoration animate-pulse text-blue-300">♥</div>
+        {/* Decorative hearts - removed since we have the starry background now */}
         
         {/* Counters Section */}
         <div id="contadores">

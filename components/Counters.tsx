@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { intervalToDuration, formatDuration, Duration } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { intervalToDuration, Duration } from 'date-fns';
 
 interface CounterProps {
   title: string;
