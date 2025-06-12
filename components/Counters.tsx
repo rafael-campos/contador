@@ -5,13 +5,15 @@ import { ptBR } from 'date-fns/locale';
 interface CounterProps {
   title: string;
   targetDate: string;
+  size?: 'large' | 'normal';
 }
 
-const Counter: React.FC<CounterProps> = ({ title, targetDate }) => {
+const Counter: React.FC<CounterProps> = ({ title, targetDate, size = 'normal' }) => {
   const [duration, setDuration] = useState<Duration | null>(null);
 
   useEffect(() => {
     const calculateDuration = () => {
+      if (!targetDate) return;
       const durationObj = intervalToDuration({
         start: new Date(targetDate),
         end: new Date(),
@@ -26,7 +28,11 @@ const Counter: React.FC<CounterProps> = ({ title, targetDate }) => {
   }, [targetDate]);
 
   if (!duration) {
-    return null;
+    return (
+      <div className="counter-card w-full md:w-6/12 h-48 flex items-center justify-center">
+        <p>Carregando...</p>
+      </div>
+    );
   }
 
   const formattedDuration = formatDuration(duration, {
@@ -37,7 +43,6 @@ const Counter: React.FC<CounterProps> = ({ title, targetDate }) => {
   .replace(/ m,/, ' minutos,')
   .replace(/ h,/, ' horas,');
 
-
   const units = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
   const labels: { [key: string]: string[] } = {
     years: ['Ano', 'Anos'],
@@ -47,18 +52,23 @@ const Counter: React.FC<CounterProps> = ({ title, targetDate }) => {
     minutes: ['Minuto', 'Minutos'],
     seconds: ['Segundo', 'Segundos'],
   };
+  
+  const cardWidth = size === 'large' ? 'md:w-7/12' : 'md:w-6/12';
+  const containerOpacity = size === 'large' ? '' : 'opacity-80';
+  const numberSize = size === 'large' ? '!text-5xl' : '!text-3xl';
+  const labelSize = size === 'large' ? 'text-base' : 'text-sm';
 
   return (
-    <div className="counter-card w-full md:w-5/12 animate-fade">
-        <h3 className="title-medium mb-6">{title}</h3>
-        <div className="flex flex-wrap justify-center gap-x-4 gap-y-6">
+    <div className={`counter-card w-full ${cardWidth} animate-fade ${containerOpacity}`}>
+        <h3 className="title-medium mb-8">{title}</h3>
+        <div className="flex flex-wrap justify-center gap-x-2 sm:gap-x-4 gap-y-6">
             {units.map(unit => {
                 const value = duration[unit as keyof Duration] || 0;
                 const label = value === 1 ? labels[unit][0] : labels[unit][1];
                 return (
-                    <div key={unit} className="flex flex-col items-center min-w-[70px]">
-                        <span className="counter-number">{String(value).padStart(2, '0')}</span>
-                        <span className="counter-label">{label}</span>
+                    <div key={unit} className="flex flex-col items-center min-w-[60px] sm:min-w-[70px]">
+                        <span className={`counter-number ${numberSize}`}>{String(value).padStart(2, '0')}</span>
+                        <span className={`counter-label mt-2 ${labelSize}`}>{label}</span>
                     </div>
                 );
             })}
@@ -80,9 +90,9 @@ const Counters: React.FC<CountersProps> = ({ datingStartDate, weddingStartDate }
                 <h2 className="title-large animate-fade">
                     Nossa História de Amor
                 </h2>
-                <div className="flex flex-col md:flex-row justify-center items-center gap-8 mb-20 mt-12">
-                    <Counter title="Tempo de Namoro" targetDate={datingStartDate} />
-                    <Counter title="Tempo de Casamento" targetDate={weddingStartDate} />
+                <div className="flex flex-col justify-center items-center gap-8 mb-20 mt-12">
+                    <Counter title="Tempo de Casamento" targetDate={weddingStartDate} size="large" />
+                    <Counter title="Tempo de Namoro" targetDate={datingStartDate} size="normal" />
                 </div>
              </div>
         </section>

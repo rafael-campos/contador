@@ -2,35 +2,19 @@
 import React from 'react';
 
 interface IconProps {
-  className?: string; // To pass Tailwind classes like fill color, size
-  size?: number | string;
+  className?: string;
 }
 
-const IntertwinedHeartsIcon: React.FC<IconProps> = ({ className, size = 24 }) => {
-  // Simplified SVG path for two intertwined hearts
-  // This is a conceptual representation. A more polished SVG might be needed.
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 100 90" // Adjusted viewBox for better aspect ratio
-      width={size}
-      height={size}
-      className={className} // Apply passed classes
-    >
-      {/* Heart 1 */}
-      <path
-        d="M40 20 C20 0 0 20 0 40 C0 60 20 80 40 90"
-        transform="translate(10,0)" // Move right heart a bit
-        className="fill-rose-gold" // Default fill, can be overridden by className
-      />
-      {/* Heart 2 - slightly offset and overlapping */}
-      <path
-        d="M40 20 C20 0 0 20 0 40 C0 60 20 80 40 90"
-        transform="translate(30,0) rotate(15 40 40)" // Move and rotate second heart
-        className="fill-rose-gold" // Default fill
-      />
-    </svg>
-  );
-};
+const IntertwinedHeartsIcon: React.FC<IconProps> = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"
+    xmlns="http://www.w3.org/2000/svg" >
+    <path
+      d="M13.784 14.237L12.5 15.521L11.216 14.237C9.373 12.394 9.373 9.356 11.216 7.513C13.058 5.671 16.096 5.671 17.938 7.513C19.78 9.356 19.78 12.394 17.938 14.237"
+      strokeLinecap="round" strokeLinejoin="round" />
+    <path
+      d="M10.216 9.763L11.5 8.479L12.784 9.763C14.627 11.606 14.627 14.644 12.784 16.487C10.942 18.329 7.904 18.329 6.062 16.487C4.22 14.644 4.22 11.606 6.062 9.763"
+      strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
 
 export default IntertwinedHeartsIcon;

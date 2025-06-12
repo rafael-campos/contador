@@ -1,65 +1,56 @@
 // components/MilestoneCard.tsx
 import React from 'react';
-import Image from 'next/image'; // For optimized images
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import DiamondRingIcon from './icons/DiamondRingIcon';
+import IntertwinedHeartsIcon from './icons/IntertwinedHeartsIcon';
 
-// Import specific icons (assuming they are in components/icons)
-import { IntertwinedHeartsIcon, DiamondRingIcon } from './icons';
+export type IconType = 'hearts' | 'ring';
 
-interface MilestoneCardProps {
+export interface Milestone {
   title: string;
-  date: string; // Keep as string, formatting can be done if needed
-  iconType: 'hearts' | 'ring'; // To select the correct icon
+  date: string;
+  icon: IconType;
   photoUrl: string;
-  align: 'left' | 'right'; // To alternate card alignment on the timeline
-  // scrollTriggered (boolean or threshold) could be added for JS-driven animations
+  description: string;
+  align: 'left' | 'right';
 }
 
-const MilestoneCard: React.FC<MilestoneCardProps> = ({
-  title,
-  date,
-  iconType,
-  photoUrl,
-  align,
-}) => {
-  const IconComponent = iconType === 'hearts' ? IntertwinedHeartsIcon : DiamondRingIcon;
+const icons = {
+  hearts: IntertwinedHeartsIcon,
+  ring: DiamondRingIcon,
+};
 
-  // Format date string if needed, e.g., from "YYYY-MM-DDTHH:mm:ss" to "Month DD, YYYY"
-  // For now, displaying as is.
-  const displayDate = new Date(date).toLocaleDateString('pt-BR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+const MilestoneCard: React.FC<Milestone> = ({ title, date, icon, photoUrl, description, align }) => {
+  const IconComponent = icons[icon];
+  const cardAlignment = align === 'left' ? 'md:mr-auto md:ml-16' : 'md:ml-auto md:mr-16';
 
-  const cardAlignmentClass = align === 'left' ? 'md:mr-auto md:ml-12' : 'md:ml-auto md:mr-12';
-  // Animation class based on alignment for variety, or a generic one
-  const animationClass = align === 'left' ? 'animate-slideInLeft' : 'animate-slideInRight';
-  const iconAnimationClass = iconType === 'hearts' ? 'animate-pulseGlow' : ''; // Shimmer to be added for ring
-
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+  };
 
   return (
-    <div
-      className={`my-16 p-6 bg-white/5 backdrop-blur-md shadow-xl rounded-lg w-full max-w-md mx-auto md:mx-0 ${cardAlignmentClass} ${animationClass} border border-rose-gold/30`}
+    <motion.div
+      className={`my-8 p-6 bg-white/70 backdrop-blur-md shadow-xl rounded-lg w-full max-w-md mx-auto md:mx-0 ${cardAlignment} border border-blue-200/50`}
+      variants={cardVariants}
     >
       <div className="flex items-center mb-4">
-        <IconComponent className={`w-10 h-10 text-rose-gold mr-4 ${iconAnimationClass}`} />
+        <IconComponent className="w-10 h-10 text-blue-500 mr-4" />
         <div>
-          <h3 className="font-script text-3xl text-rose-gold">{title}</h3>
-          <p className="font-cormorant text-md text-champagne-gold">{displayDate}</p>
+          <h3 className="font-serif text-2xl text-blue-800">{title}</h3>
+          <p className="font-sans text-sm text-blue-600">
+            {new Date(date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })}
+          </p>
         </div>
       </div>
 
-      <div className="relative w-full h-64 md:h-72 rounded-md overflow-hidden shadow-lg">
-        <Image
-          src={photoUrl}
-          alt={title}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-md"
-        />
+      <div className="relative w-full h-56 md:h-64 rounded-md overflow-hidden shadow-lg mb-4">
+        <Image src={photoUrl} alt={title} layout="fill" objectFit="cover" className="rounded-md" />
       </div>
-      {/* Optional: A short description could go here */}
-    </div>
+
+      <p className="text-blue-900/80 leading-relaxed text-center">{description}</p>
+    </motion.div>
   );
 };
 
