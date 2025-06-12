@@ -92,7 +92,7 @@ interface CountersProps {
 const Counters: React.FC<CountersProps> = ({ datingStartDate, weddingStartDate }) => {
     return (
         <section className="py-10 md:py-16 relative">
-             <div className="container mx-auto">
+             <div className="container mx-auto px-4">
                 <BlurText
                   as="h2"
                   text="Nossa História de Amor"

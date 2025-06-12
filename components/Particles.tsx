@@ -120,19 +120,37 @@ const fragment = /* glsl */ `
     
     // Lógica para o cometa
     if (vIsComet > 0.5) {
-      // Cauda simulada alongando o ponto
-      uv.x -= 0.5; // Centraliza
-      uv.x *= 0.1; // Achata ainda mais para uma cauda bem longa
-      uv.x += 0.5; // Reposiciona
+      // 1. Vetor do centro ao ponto atual
+      vec2 from_center = uv - center;
 
-      float d = length(uv - center);
+      // 2. Rotacionar o sistema de coordenadas para que a cauda fique alinhada com o eixo X positivo
+      // A cauda vai para cima e para a direita, que é um ângulo de -45 graus ou -PI/4 radianos
+      float angle = -0.785398; // -45 deg
+      mat2 rotation = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
+      vec2 rotated_coords = rotation * from_center;
+
+      // 3. Agora que está alinhado, podemos achatar o eixo Y para criar a forma da cauda
+      rotated_coords.y *= 0.25; // Deixa a cauda 4x mais fina que longa
+
+      // 4. Calcular a distância no espaço rotacionado e achatado
+      // Isso define a forma elíptica da cauda na diagonal
+      float d = length(rotated_coords);
+
       float glow = 0.0;
 
       if(d < 0.5) {
-        // Núcleo brilhante
-        glow = smoothstep(0.1, 0.0, d);
-        // Cauda que se desvanece
-        glow += smoothstep(0.5, 0.1, d) * (1.0 - uv.x) * 0.9; // Cauda mais opaca
+        // O núcleo deve ser circular, usamos a distância original para ele
+        glow = smoothstep(0.1, 0.0, length(from_center));
+        
+        // A cauda se desvanece ao longo de seu eixo (rotated_coords.x)
+        // A cauda só existe na parte positiva do eixo x rotacionado
+        float tail_factor = smoothstep(0.0, 0.5, rotated_coords.x);
+        
+        // A intensidade geral da cauda diminui com a distância (d)
+        float tail_intensity = smoothstep(0.5, 0.1, d);
+
+        // Combina o fator da cauda com a intensidade geral
+        glow = max(glow, tail_intensity * tail_factor * 0.9);
       }
       
       if (glow < 0.01) discard;
