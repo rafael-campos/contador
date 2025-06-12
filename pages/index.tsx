@@ -1,13 +1,18 @@
 // pages/index.tsx
 import Head from 'next/head';
-import CountersFinale from '../components/CountersFinale';
+import dynamic from 'next/dynamic';
+
+const Counters = dynamic(() => import('../components/Counters'), {
+  ssr: false,
+  // Optional: Add a loading component
+});
 
 export default function Home() {
   // Dados de relacionamento
   const wifeName = "Mirelle";
   const yourName = "Rafael";
-  const datingStartDate = "2021-01-15T20:30:00";
-  const weddingStartDate = "2024-04-24T17:00:00";
+  const datingStartDate = "2021-12-15T20:30:00";
+  const weddingStartDate = "2024-08-24T17:00:00";
 
   return (
     <>
@@ -38,10 +43,9 @@ export default function Home() {
         
         {/* Counters Section */}
         <div id="contadores">
-          <CountersFinale
+          <Counters
             datingStartDate={datingStartDate}
             weddingStartDate={weddingStartDate}
-            yourName={yourName}
           />
         </div>
       </main>
