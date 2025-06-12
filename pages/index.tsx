@@ -2,6 +2,7 @@
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
+import BlurText from '../components/BlurText';
 
 const Counters = dynamic(() => import('../components/Counters'), {
   ssr: false,
@@ -54,12 +55,20 @@ export default function Home() {
         {/* Hero Section */}
         <section className="py-8 md:py-16 text-center">
             <div className="container mx-auto px-4">
-                <h1 className="font-script text-5xl md:text-8xl text-blue-500 mb-4 md:mb-6">
-                  {wifeName} & {yourName}
-                </h1>
-                <p className="text-base md:text-xl text-blue-300 opacity-80 max-w-2xl mx-auto mt-2 md:mt-4 px-2">
-                  Cada segundo ao seu lado é um presente. Veja quanto tempo nossa história de amor já dura.
-                </p>
+                <BlurText
+                  as="h1"
+                  text={`${wifeName} & ${yourName}`}
+                  className="font-script text-5xl md:text-8xl text-blue-500 mb-4 md:mb-6"
+                  delay={100}
+                  animateBy="letters"
+                />
+                <BlurText
+                  as="p"
+                  text="Cada segundo ao seu lado é um presente. Veja quanto tempo nossa história de amor já dura."
+                  className="text-base md:text-xl text-blue-300 opacity-80 max-w-2xl mx-auto mt-2 md:mt-4 px-2"
+                  delay={50}
+                  animateBy="words"
+                />
             </div>
         </section>
         
