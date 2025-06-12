@@ -28,7 +28,7 @@ const Counter: React.FC<CounterProps> = ({ title, targetDate, size = 'normal' })
 
   if (!duration) {
     return (
-      <div className="counter-card w-full md:w-6/12 h-48 flex items-center justify-center">
+      <div className="counter-card w-full max-w-md mx-auto flex items-center justify-center h-48">
         <p>Carregando...</p>
       </div>
     );
@@ -44,22 +44,21 @@ const Counter: React.FC<CounterProps> = ({ title, targetDate, size = 'normal' })
     seconds: ['Segundo', 'Segundos'],
   };
   
-  const cardWidth = size === 'large' ? 'md:w-7/12' : 'md:w-6/12';
   const containerOpacity = size === 'large' ? '' : 'opacity-80';
-  const numberSize = size === 'large' ? '!text-5xl' : '!text-3xl';
-  const labelSize = size === 'large' ? 'text-base' : 'text-sm';
+  const numberSize = size === 'large' ? '!text-4xl md:!text-5xl' : '!text-3xl md:!text-4xl';
+  const labelSize = size === 'large' ? 'text-sm md:text-base' : 'text-xs md:text-sm';
 
   return (
-    <div className={`counter-card w-full ${cardWidth} animate-fade ${containerOpacity} p-6`}>
-        <h3 className="title-medium mb-8">{title}</h3>
-        <div className="flex flex-wrap justify-center gap-x-2 sm:gap-x-4 gap-y-6">
+    <div className={`counter-card w-full max-w-md mx-auto animate-fade ${containerOpacity} p-4 md:p-6`}>
+        <h3 className="title-medium mb-6 md:mb-8">{title}</h3>
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-4 justify-items-center">
             {units.map(unit => {
                 const value = duration[unit as keyof Duration] || 0;
                 const label = value === 1 ? labels[unit][0] : labels[unit][1];
                 return (
-                    <div key={unit} className="flex flex-col items-center min-w-[60px] sm:min-w-[70px]">
+                    <div key={unit} className="flex flex-col items-center w-full">
                         <span className={`counter-number ${numberSize}`}>{String(value).padStart(2, '0')}</span>
-                        <span className={`counter-label mt-2 ${labelSize}`}>{label}</span>
+                        <span className={`counter-label mt-1 md:mt-2 ${labelSize}`}>{label}</span>
                     </div>
                 );
             })}
@@ -76,18 +75,22 @@ interface CountersProps {
 
 const Counters: React.FC<CountersProps> = ({ datingStartDate, weddingStartDate }) => {
     return (
-        <section className="py-20 relative">
+        <section className="py-10 md:py-20 relative">
              <div className="container mx-auto px-4">
                 <h2 className="title-large animate-fade">
                     Nossa História de Amor
                 </h2>
-                <div className="flex flex-col justify-center items-center mb-20 mt-12">
-                    <div className="counter-wrapper w-full mb-16">
-                        <Counter title="Tempo de Casamento" targetDate={weddingStartDate} size="large" />
+                <div className="flex flex-col items-center mb-10 md:mb-20 mt-8 md:mt-12">
+                    <div className="w-full flex justify-center">
+                        <div className="w-full max-w-md mb-8 md:mb-16">
+                            <Counter title="Tempo de Casamento" targetDate={weddingStartDate} size="large" />
+                        </div>
                     </div>
-                    <div className="counter-spacing" style={{ height: '3rem' }}></div>
-                    <div className="counter-wrapper w-full mt-16">
-                        <Counter title="Tempo de Namoro" targetDate={datingStartDate} size="normal" />
+                    <div className="counter-spacing" style={{ height: '2rem' }}></div>
+                    <div className="w-full flex justify-center">
+                        <div className="w-full max-w-md mt-8 md:mt-16">
+                            <Counter title="Tempo de Namoro" targetDate={datingStartDate} size="normal" />
+                        </div>
                     </div>
                 </div>
              </div>

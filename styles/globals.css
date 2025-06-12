@@ -50,6 +50,15 @@ h1, h2, h3, h4 {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container > * {
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
 }
 
 /* Contador */
@@ -69,6 +78,10 @@ h1, h2, h3, h4 {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid rgba(146, 168, 209, 0.1);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 28rem;
 }
 
 .counter-card:hover {
@@ -215,11 +228,11 @@ h1, h2, h3, h4 {
 /* Responsividade */
 @media (max-width: 768px) {
   .counter-number {
-    font-size: 2rem; /* 32px */
+    font-size: 1.75rem !important; /* 28px */
   }
   
   .counter-label {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
   
   .title-large {
@@ -227,7 +240,22 @@ h1, h2, h3, h4 {
   }
   
   .title-medium {
-    font-size: 2rem;
+    font-size: 1.75rem;
+  }
+
+  .counter-card {
+    padding: 1.25rem;
+    margin: 0 auto;
+    width: 95%;
+    max-width: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    padding: 0 0.75rem;
   }
 }
 
@@ -237,5 +265,37 @@ h1, h2, h3, h4 {
 }
 
 .counter-wrapper {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Fix for mobile grid layout */
+@media (max-width: 640px) {
+  .counter-card {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+
+/* Additional mobile fixes */
+@media (max-width: 480px) {
+  .counter-card {
+    max-width: 100%;
+    padding: 1rem 0.5rem;
+  }
+  
+  .counter-number {
+    font-size: 1.5rem !important;
+  }
+  
+  .counter-label {
+    font-size: 0.65rem;
+  }
+  
+  .grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
 }
