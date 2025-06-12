@@ -238,7 +238,7 @@ h1, h2, h3, h4 {
 
 /* Classe para adicionar espaço no topo */
 .hero-section {
-  margin-top: 120px !important;
+  margin-top: 80px !important;
 }
 
 /* Responsividade */
@@ -270,11 +270,8 @@ h1, h2, h3, h4 {
   }
 }
 
-/* Espaçamento entre contadores */
-.counter-spacing {
-  height: 5rem;
-  width: 100%;
-}
+/* Espaçamento entre contadores (removido, agora controlado por 'gap') */
+/* .counter-spacing { ... } */
 
 .counter-wrapper {
   display: flex;

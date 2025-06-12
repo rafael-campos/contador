@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { intervalToDuration, Duration } from 'date-fns';
+import BlurText from './BlurText';
 
 // Hook customizado para obter o valor anterior de um estado ou prop
 function usePrevious<T>(value: T): T | undefined {
@@ -90,20 +91,23 @@ interface CountersProps {
 
 const Counters: React.FC<CountersProps> = ({ datingStartDate, weddingStartDate }) => {
     return (
-        <section className="py-10 md:py-20 relative">
+        <section className="py-10 md:py-16 relative">
              <div className="container mx-auto px-4">
-                <h2 className="title-large animate-fade">
-                    Nossa História de Amor
-                </h2>
-                <div className="flex flex-col items-center mb-10 md:mb-20 mt-8 md:mt-12">
+                <BlurText
+                  as="h2"
+                  text="Nossa História de Amor"
+                  className="title-large"
+                  delay={80}
+                  animateBy="words"
+                />
+                <div className="flex flex-col items-center gap-8 md:gap-10 mt-8 md:mt-12">
                     <div className="w-full flex justify-center">
-                        <div className="w-full max-w-md mb-12 md:mb-20">
+                        <div className="w-full max-w-md">
                             <Counter title="Tempo de Casamento" targetDate={weddingStartDate} size="large" />
                         </div>
                     </div>
-                    <div className="counter-spacing" style={{ height: '4rem' }}></div>
                     <div className="w-full flex justify-center">
-                        <div className="w-full max-w-md mt-12 md:mt-20">
+                        <div className="w-full max-w-md">
                             <Counter title="Tempo de Namoro" targetDate={datingStartDate} size="normal" />
                         </div>
                     </div>
