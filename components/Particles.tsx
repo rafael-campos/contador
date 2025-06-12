@@ -94,7 +94,7 @@ const vertex = /* glsl */ `
     
     // Tamanho diferenciado para o cometa
     if (isComet > 0.5) {
-      gl_PointSize = (uBaseSize * 3.5) / length(mvPos.xyz);
+      gl_PointSize = (uBaseSize * 5.5) / length(mvPos.xyz);
     } else {
       float sizeVariation = pow(random.x, 2.0) * uSizeRandomness * 1.5;
       gl_PointSize = (uBaseSize * (0.4 + sizeVariation)) / length(mvPos.xyz);
