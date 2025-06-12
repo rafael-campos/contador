@@ -28,7 +28,7 @@ const Counter: React.FC<CounterProps> = ({ title, targetDate, size = 'normal' })
 
   if (!duration) {
     return (
-      <div className="counter-card w-full max-w-md mx-auto flex items-center justify-center h-48">
+      <div className="w-full max-w-md mx-auto flex items-center justify-center h-48">
         <p>Carregando...</p>
       </div>
     );
@@ -49,7 +49,7 @@ const Counter: React.FC<CounterProps> = ({ title, targetDate, size = 'normal' })
   const labelSize = size === 'large' ? 'text-sm md:text-base' : 'text-xs md:text-sm';
 
   return (
-    <div className={`counter-card w-full max-w-md mx-auto animate-fade ${containerOpacity} p-4 md:p-6`}>
+    <div className={`w-full max-w-md mx-auto animate-fade ${containerOpacity} p-4 md:p-6`}>
         <h3 className="title-medium mb-6 md:mb-8">{title}</h3>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-4 justify-items-center">
             {units.map(unit => {
