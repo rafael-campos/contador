@@ -1,5 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { intervalToDuration, Duration } from 'date-fns';
+
+// Hook customizado para obter o valor anterior de um estado ou prop
+function usePrevious<T>(value: T): T | undefined {
+  const ref = useRef<T | undefined>(undefined);
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
 
 interface CounterProps {
   title: string;
@@ -9,6 +18,7 @@ interface CounterProps {
 
 const Counter: React.FC<CounterProps> = ({ title, targetDate, size = 'normal' }) => {
   const [duration, setDuration] = useState<Duration | null>(null);
+  const prevDuration = usePrevious(duration);
 
   useEffect(() => {
     const calculateDuration = () => {
@@ -45,19 +55,24 @@ const Counter: React.FC<CounterProps> = ({ title, targetDate, size = 'normal' })
   };
   
   const containerOpacity = size === 'large' ? '' : 'opacity-80';
-  const numberSize = size === 'large' ? '!text-4xl md:!text-5xl' : '!text-3xl md:!text-4xl';
+  const numberSizeClass = size === 'large' ? 'number-large' : 'number-normal';
   const labelSize = size === 'large' ? 'text-sm md:text-base' : 'text-xs md:text-sm';
 
   return (
     <div className={`w-full max-w-md mx-auto animate-fade ${containerOpacity} p-4 md:p-6`}>
         <h3 className="title-medium mb-6 md:mb-8">{title}</h3>
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-4 justify-items-center">
+        <div className="grid grid-cols-3 gap-2 md:gap-4 justify-items-center">
             {units.map(unit => {
                 const value = duration[unit as keyof Duration] || 0;
+                const prevValue = prevDuration?.[unit as keyof Duration] || 0;
+                
+                // Determina a animação com base na mudança de valor
+                const animationClass = value !== prevValue ? 'animate-tick' : 'animate-subtle-pulse';
+
                 const label = value === 1 ? labels[unit][0] : labels[unit][1];
                 return (
                     <div key={unit} className="flex flex-col items-center w-full">
-                        <span className={`counter-number ${numberSize}`}>{String(value).padStart(2, '0')}</span>
+                        <span className={`counter-number ${numberSizeClass} ${animationClass}`}>{String(value).padStart(2, '0')}</span>
                         <span className={`counter-label mt-1 md:mt-2 ${labelSize}`}>{label}</span>
                     </div>
                 );

@@ -17,8 +17,8 @@ export default function Home() {
   // Dados de relacionamento
   const wifeName = "Mirelle";
   const yourName = "Rafael";
-  const datingStartDate = "2021-12-15T20:30:00";
-  const weddingStartDate = "2024-08-24T17:00:00";
+  const datingStartDate = "2021-12-15T20:30:07";
+  const weddingStartDate = "2024-08-24T17:00:13";
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
