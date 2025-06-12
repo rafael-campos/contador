@@ -47,7 +47,10 @@ export default function Home() {
         </Suspense>
       </div>
 
-      <main className="flex-grow pt-6 md:pt-10 w-full">
+      {/* Espaço vazio no topo */}
+      <div style={{ height: '50px' }}></div>
+
+      <main className="flex-grow w-full">
         {/* Hero Section */}
         <section className="py-8 md:py-16 text-center">
             <div className="container mx-auto px-4">

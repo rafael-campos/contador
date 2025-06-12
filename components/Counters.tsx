@@ -82,13 +82,13 @@ const Counters: React.FC<CountersProps> = ({ datingStartDate, weddingStartDate }
                 </h2>
                 <div className="flex flex-col items-center mb-10 md:mb-20 mt-8 md:mt-12">
                     <div className="w-full flex justify-center">
-                        <div className="w-full max-w-md mb-8 md:mb-16">
+                        <div className="w-full max-w-md mb-12 md:mb-20">
                             <Counter title="Tempo de Casamento" targetDate={weddingStartDate} size="large" />
                         </div>
                     </div>
-                    <div className="counter-spacing" style={{ height: '2rem' }}></div>
+                    <div className="counter-spacing" style={{ height: '4rem' }}></div>
                     <div className="w-full flex justify-center">
-                        <div className="w-full max-w-md mt-8 md:mt-16">
+                        <div className="w-full max-w-md mt-12 md:mt-20">
                             <Counter title="Tempo de Namoro" targetDate={datingStartDate} size="normal" />
                         </div>
                     </div>

@@ -103,6 +103,7 @@ h1, h2, h3, h4 {
   color: var(--primary);
   text-align: center;
   margin-bottom: 2rem;
+  margin-top: 1.5rem;
 }
 
 .title-medium {
@@ -111,6 +112,7 @@ h1, h2, h3, h4 {
   color: var(--secondary);
   text-align: center;
   margin-bottom: 1.5rem;
+  margin-top: 1rem;
 }
 
 /* Datas */
@@ -213,6 +215,11 @@ h1, h2, h3, h4 {
   animation-delay: 0.6s;
 }
 
+/* Classe para adicionar espaço no topo */
+.hero-section {
+  margin-top: 120px !important;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .counter-number {
@@ -235,11 +242,16 @@ h1, h2, h3, h4 {
     padding: 1.25rem;
     margin: 0 auto;
   }
+  
+  /* Ajuste para telas menores */
+  .hero-section {
+    margin-top: 80px !important;
+  }
 }
 
 /* Espaçamento entre contadores */
 .counter-spacing {
-  height: 2.5rem;
+  height: 5rem;
   width: 100%;
 }
 
@@ -247,13 +259,19 @@ h1, h2, h3, h4 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 /* Ajustes para telas menores */
 @media (max-width: 640px) {
   .counter-card {
     padding: 1rem;
+  }
+  
+  .counter-spacing {
+    height: 3.5rem;
   }
 }
 
@@ -273,6 +291,15 @@ h1, h2, h3, h4 {
   
   .grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+  
+  /* Ajuste para telas muito pequenas */
+  .hero-section {
+    margin-top: 60px !important;
+  }
+  
+  .counter-spacing {
+    height: 2.5rem;
   }
 }
 
