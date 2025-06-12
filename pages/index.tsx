@@ -1,13 +1,11 @@
 // pages/index.tsx
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-import { Milestone } from '../components/MilestoneCard';
 
 const Counters = dynamic(() => import('../components/Counters'), {
   ssr: false,
   // Optional: Add a loading component
 });
-const Timeline = dynamic(() => import('../components/Timeline'), { ssr: false });
 
 export default function Home() {
   // Dados de relacionamento
@@ -15,25 +13,6 @@ export default function Home() {
   const yourName = "Rafael";
   const datingStartDate = "2021-12-15T20:30:00";
   const weddingStartDate = "2024-08-24T17:00:00";
-
-  const milestones: Milestone[] = [
-    {
-      title: 'O Início de Tudo',
-      date: '2021-12-15',
-      icon: 'hearts',
-      photoUrl: 'https://images.unsplash.com/photo-1542444592-3d3a09372093?q=80&w=2070&auto=format&fit=crop',
-      description: 'O dia em que nossas vidas se cruzaram e uma linda história de amor começou a ser escrita.',
-      align: 'left',
-    },
-    {
-      title: 'O Dia do "Sim"',
-      date: '2024-08-24',
-      icon: 'ring',
-      photoUrl: 'https://images.unsplash.com/photo-1597157639073-692849542126?q=80&w=1974&auto=format&fit=crop',
-      description: 'Unimos nossas vidas perante Deus e as pessoas que amamos, prometendo uma eternidade juntos.',
-      align: 'right',
-    }
-  ];
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -44,7 +23,7 @@ export default function Home() {
         <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2392A8D1'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>" />
       </Head>
 
-      <main className="flex-grow">
+      <main className="flex-grow mt-20">
         {/* Hero Section */}
         <section className="py-16 md:py-24 text-center">
             <div className="container mx-auto px-4">
@@ -68,8 +47,6 @@ export default function Home() {
             weddingStartDate={weddingStartDate}
           />
         </div>
-        
-        <Timeline milestones={milestones} />
       </main>
 
       <footer className="text-center py-6 text-blue-900 opacity-60 font-medium">
