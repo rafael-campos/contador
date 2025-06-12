@@ -237,3 +237,12 @@ h1, h2, h3, h4 {
     font-size: 2rem;
   }
 }
+
+/* Espaçamento entre contadores */
+.counter-spacing {
+  margin-bottom: 2rem;
+}
+
+.counter-wrapper {
+  margin-bottom: 3rem;
+}

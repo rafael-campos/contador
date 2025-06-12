@@ -59,7 +59,7 @@ const Counter: React.FC<CounterProps> = ({ title, targetDate, size = 'normal' })
   const labelSize = size === 'large' ? 'text-base' : 'text-sm';
 
   return (
-    <div className={`counter-card w-full ${cardWidth} animate-fade ${containerOpacity}`}>
+    <div className={`counter-card w-full ${cardWidth} animate-fade ${containerOpacity} p-6`}>
         <h3 className="title-medium mb-8">{title}</h3>
         <div className="flex flex-wrap justify-center gap-x-2 sm:gap-x-4 gap-y-6">
             {units.map(unit => {
@@ -90,9 +90,14 @@ const Counters: React.FC<CountersProps> = ({ datingStartDate, weddingStartDate }
                 <h2 className="title-large animate-fade">
                     Nossa História de Amor
                 </h2>
-                <div className="flex flex-col justify-center items-center gap-8 mb-20 mt-12">
-                    <Counter title="Tempo de Casamento" targetDate={weddingStartDate} size="large" />
-                    <Counter title="Tempo de Namoro" targetDate={datingStartDate} size="normal" />
+                <div className="flex flex-col justify-center items-center mb-20 mt-12">
+                    <div className="counter-wrapper w-full mb-16">
+                        <Counter title="Tempo de Casamento" targetDate={weddingStartDate} size="large" />
+                    </div>
+                    <div className="counter-spacing" style={{ height: '3rem' }}></div>
+                    <div className="counter-wrapper w-full mt-16">
+                        <Counter title="Tempo de Namoro" targetDate={datingStartDate} size="normal" />
+                    </div>
                 </div>
              </div>
         </section>
