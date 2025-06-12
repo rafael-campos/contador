@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
-import { motion, useScroll } from 'framer-motion';
+import { motion, useScroll, MotionValue } from 'framer-motion';
 import MilestoneCard, { Milestone } from './MilestoneCard';
 
-const TimelinePath: React.FC<{ scrollProgress: any }> = ({ scrollProgress }) => {
+const TimelinePath: React.FC<{ scrollProgress: MotionValue<number> }> = ({ scrollProgress }) => {
   const pathRef = useRef<SVGPathElement>(null);
   const pathDefinition = "M 10 0 Q -5 50, 10 100 T 10 200 Q 25 250, 10 300 T 10 400 Q -5 450, 10 500 T 10 600 Q 25 650, 10 700 T 10 800";
 

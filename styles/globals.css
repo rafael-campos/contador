@@ -13,7 +13,8 @@
   --text-dark: #2D3748;
   --text-light: #F5F9FF;
   --accent: #B3C5E5; /* Azul Serenity mais claro */
-  --background: #F5F9FF;
+  --background: #121212; /* Dark background */
+  --card-bg: #1E1E1E; /* Slightly lighter dark for cards */
   --gold: #D4AF37;
 }
 
@@ -21,7 +22,7 @@
 body {
   font-family: 'Montserrat', sans-serif;
   background-color: var(--background);
-  color: var(--text-dark);
+  color: var(--text-light);
   margin: 0;
   padding: 0;
   min-height: 100vh;
@@ -44,7 +45,7 @@ body::before {
 
 h1, h2, h3, h4 {
   font-family: 'Playfair Display', serif;
-  color: var(--primary-dark);
+  color: var(--primary);
   margin: 0;
 }
 
@@ -61,26 +62,26 @@ h1, h2, h3, h4 {
 
 /* Contador */
 .counter-section {
-  background: linear-gradient(135deg, #E4EBFA 0%, #EFF4FB 100%);
+  background: linear-gradient(135deg, #1A1A1A 0%, #252525 100%);
   padding: 4rem 0;
   border-radius: 1rem;
   margin: 2rem 0;
-  box-shadow: 0 10px 30px rgba(146, 168, 209, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .counter-card {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(10px);
   border-radius: 1rem;
   padding: 2rem;
-  box-shadow: 0 10px 30px rgba(146, 168, 209, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid rgba(146, 168, 209, 0.1);
 }
 
 .counter-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(146, 168, 209, 0.25);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
 /* Números do contador */
@@ -96,7 +97,7 @@ h1, h2, h3, h4 {
 
 .counter-label {
   font-size: 0.875rem; /* 14px */
-  color: var(--primary-dark);
+  color: var(--secondary);
   font-weight: 500;
   text-align: center;
   display: block;
@@ -114,7 +115,7 @@ h1, h2, h3, h4 {
 .title-medium {
   font-family: 'Playfair Display', serif;
   font-size: 2.5rem;
-  color: var(--primary-dark);
+  color: var(--secondary);
   text-align: center;
   margin-bottom: 1.5rem;
 }
@@ -128,7 +129,7 @@ h1, h2, h3, h4 {
   font-weight: 600;
   display: inline-block;
   margin: 0.5rem 0;
-  box-shadow: 0 4px 8px rgba(146, 168, 209, 0.25);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   text-align: center;
 }
 
@@ -138,14 +139,14 @@ h1, h2, h3, h4 {
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
-  background-color: white;
+  background-color: #1E1E1E;
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 15px rgba(146, 168, 209, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   z-index: 100;
   animation: bounce 2s infinite;
   cursor: pointer;

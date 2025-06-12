@@ -30,7 +30,7 @@ export default function Home() {
                 <h1 className="font-script text-6xl md:text-8xl text-blue-500 mb-4">
                   {wifeName} & {yourName}
                 </h1>
-                <p className="text-lg md:text-xl text-blue-900 opacity-70 max-w-2xl mx-auto">
+                <p className="text-lg md:text-xl text-blue-300 opacity-80 max-w-2xl mx-auto">
                   Cada segundo ao seu lado é um presente. Veja quanto tempo nossa história de amor já dura.
                 </p>
             </div>
@@ -49,7 +49,7 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="text-center py-6 text-blue-900 opacity-60 font-medium">
+      <footer className="text-center py-6 text-blue-300 opacity-70 font-medium">
         <p>Desenvolvido com ❤️ por Rafael</p>
       </footer>
     </div>

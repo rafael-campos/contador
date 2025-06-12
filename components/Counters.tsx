@@ -35,14 +35,6 @@ const Counter: React.FC<CounterProps> = ({ title, targetDate, size = 'normal' })
     );
   }
 
-  const formattedDuration = formatDuration(duration, {
-    locale: ptBR,
-    delimiter: ', ',
-  })
-  .replace(/ s,/, ' segundos,') // Quick fix for short format
-  .replace(/ m,/, ' minutos,')
-  .replace(/ h,/, ' horas,');
-
   const units = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
   const labels: { [key: string]: string[] } = {
     years: ['Ano', 'Anos'],
