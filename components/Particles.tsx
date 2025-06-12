@@ -221,12 +221,13 @@ const Particles: React.FC<ParticlesProps> = ({
     const isComet = new Float32Array(totalParticles);
     const palette = particleColors ?? defaultColors;
 
-    // Distribuição para Via Láctea
+    // Distribuição para Via Láctea e estrelas de fundo
     for (let i = 0; i < particleCount; i++) {
       let x, y, z;
-      if (Math.random() < 0.7) { // 70% das estrelas na faixa
-        x = (Math.random() - 0.5) * 2; // Espalha em X
-        y = (Math.random() - 0.5) * 0.2; // Compacta em Y
+      // 60% das estrelas na faixa da Via Láctea
+      if (Math.random() < 0.6) { 
+        x = (Math.random() - 0.5) * 2.5; // Espalha mais em X
+        y = (Math.random() - 0.5) * 0.15; // Mais compacta em Y
         z = (Math.random() - 0.5) * 1.5;
         
         // Rotação para inclinar a faixa
@@ -235,14 +236,10 @@ const Particles: React.FC<ParticlesProps> = ({
         const newZ = y * Math.sin(angle) + z * Math.cos(angle);
         y = newY;
         z = newZ;
-      } else { // 30% espalhadas
-        let len;
-        do {
-          x = Math.random() * 2 - 1;
-          y = Math.random() * 2 - 1;
-          z = Math.random() * 2 - 1;
-          len = x * x + y * y + z * z;
-        } while (len > 1 || len === 0);
+      } else { // 40% espalhadas em um cubo para preencher os cantos
+        x = Math.random() * 2 - 1;
+        y = Math.random() * 2 - 1;
+        z = Math.random() * 2 - 1;
       }
       
       const r = Math.pow(Math.random(), 0.5);
