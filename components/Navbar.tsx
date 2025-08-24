@@ -1,5 +1,7 @@
 
 // components/Navbar.tsx
+import Link from 'next/link';
+
 const Navbar = () => {
 
     return (
@@ -7,7 +9,9 @@ const Navbar = () => {
             <div className="container mx-auto flex justify-center items-center">
                 <ul className="flex items-center gap-x-6">
                     <li>
-                        <span className="text-white font-medium">Linha do Tempo</span>
+                        <Link href="/timeline" className="text-white font-medium hover:bg-white/20 rounded-md px-4 py-2 transition-all duration-300">
+                            Linha do Tempo
+                        </Link>
                     </li>
                 </ul>
             </div>
