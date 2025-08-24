@@ -43,19 +43,13 @@ const Timeline: React.FC<{ milestones: Milestone[] }> = ({ milestones }) => {
 
   return (
     <section ref={containerRef} className="py-16 md:py-24 relative">
-      <div className="container mx-auto px-4 max-w-4xl relative">
+      <div className="container mx-auto px-4 max-w-6xl relative">
         <TimelinePath scrollProgress={scrollYProgress} />
-        <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ staggerChildren: 0.4 }}
-            className="flex flex-col"
-        >
-            {milestones.map((milestone, index) => (
-                <MilestoneCard key={index} {...milestone} />
-            ))}
-        </motion.div>
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {milestones.map((milestone, index) => (
+            <MilestoneCard key={index} {...milestone} />
+          ))}
+        </div>
       </div>
     </section>
   );

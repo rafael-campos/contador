@@ -3,6 +3,7 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import BlurText from '../components/BlurText';
+import Navbar from '../components/Navbar';
 
 const Counters = dynamic(() => import('../components/Counters'), {
   ssr: false,
@@ -48,10 +49,8 @@ export default function Home() {
         </Suspense>
       </div>
 
-      {/* Espaço vazio no topo */}
-      <div style={{ height: '50px' }}></div>
-
-      <main className="flex-grow w-full">
+      <Navbar />
+      <main className="flex-grow w-full pt-20">
         {/* Hero Section */}
         <section className="py-8 md:py-16 text-center">
             <div className="container mx-auto px-4">
